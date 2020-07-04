@@ -1,47 +1,42 @@
 
 const express = require('express')
+const app = express()
 const path = require('path')
+
 const convert = require('./lib/convert')
 const apiBCB = require('./lib/api.bcb')
 
-const app = express()
-
-app.set('view engine', 'ejs')//to set the ejs
+app.set('view engine', 'ejs')
 app.set('views', path.join(__dirname, 'views'))
+app.use(express.static(path.join(__dirname, 'public')))
 
-app.use(express.static(path.join(__dirname, 'public')))//to put our files
-/*
-app.get('/', (req, res) => {
-    res.render('home')
-})
-*/
 app.get('/', async(req, res) => {
-    const price = await apiBCB.getPrice()
+    const cotacao = await apiBCB.getCotacao()
+    //console.log('cotacao', cotacao)
     res.render('home', {
-        price
+        cotacao
     })
 })
-app.get('/price', (req, res) => {
-    const {price, amount} = req.query//extrair corpo
-    if(price && amount){
-        const conversion = convert.convert(price, amount)//converter esse corpo
-        res.render('price', {
+app.get('/cotacao', (req, res) => {
+    const { cotacao, quantidade } = req.query 
+    if(cotacao && quantidade){
+        const conversao = convert.convert(cotacao, quantidade)
+        res.render('cotacao', {
             error: false,
-            price: convert.toMoney(price),   
-            amount: convert.toMoney(amount),
-            conversion: convert.toMoney(conversion)
-        })//renderizar
+            cotacao: convert.toMoney(cotacao),
+            quantidade: convert.toMoney(quantidade),
+            conversao: convert.toMoney(conversao)
+        })
     }else{
-        res.render('price', {
-            error: 'Invalid values!'
+        res.render('cotacao', {
+            error: 'Valores Inválidos'
         })
     }
 })
-
 app.listen(3000, err => {
     if(err){
-        console.log('Could not start!')
+        console.log('não foi possivel iniciar')
     }else{
-        console.log('ConvertMyMoney is online!')
+        console.log('ConvertMyMoney está online')
     }
 })
