@@ -1,4 +1,4 @@
 # ConvertMyMoney
 Mais uma aula finalizada com a galera do FullStack ... JavaScript, axios, ejs, css, express, path e realizando os test
 
-![convertMyMoney](https://user-images.githubusercontent.com/55331072/86502411-2e145b80-bd79-11ea-9786-b3f8b8415965.gif)
+![convertMyMoneyGIF](https://user-images.githubusercontent.com/55331072/86512408-80d13000-bdd8-11ea-9a12-5c300e0e3d74.gif)
